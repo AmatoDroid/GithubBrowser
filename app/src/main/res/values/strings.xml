@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Github browser</string>
+    <string name="app_name_with_caret">Github\nBrowser</string>
+    <string name="guest">Guest</string>
+    <string name="sign_in">Sign in</string>
+    <string name="login">Login</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+</resources>
