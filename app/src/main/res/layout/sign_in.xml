@@ -6,6 +6,9 @@
         <variable
             name="handler"
             type="jp.rei.andou.githubbrowser.presentation.authorization.AuthorizationNavigator" />
+        <variable
+            name="viewModel"
+            type="jp.rei.andou.githubbrowser.presentation.authorization.SignInViewModelImpl"/>
     </data>
 
     <RelativeLayout
@@ -31,12 +34,16 @@
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:errorEnabled="@{viewModel.usernameFieldError.isEmpty()}"
+            errorMessage="@{viewModel.usernameFieldError}"
             android:layout_centerInParent="true">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/username"
+                android:text="@={viewModel.user.username}"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.checkUsername(text)}"
                 android:inputType="text"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -47,6 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            app:errorEnabled="@{viewModel.passwordFieldError.isEmpty()}"
+            errorMessage="@{viewModel.passwordFieldError}"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorAccent">
 
@@ -54,6 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
+                android:text="@={viewModel.user.password}"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.checkPassword(text)}"
                 android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -63,6 +74,8 @@
             android:layout_below="@id/password"
             android:layout_width="200dp"
             android:text="@string/login"
+            android:enabled="@{viewModel.usernameFieldError == null &amp;&amp; viewModel.passwordFieldError == null}"
+            android:onClick="@{() -> viewModel.login()}"
             android:layout_height="wrap_content" />
 
     </RelativeLayout>

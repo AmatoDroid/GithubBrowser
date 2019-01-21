@@ -10,9 +10,9 @@ import jp.rei.andou.githubbrowser.di.components.DaggerMainComponent;
 import jp.rei.andou.githubbrowser.di.components.MainComponent;
 import jp.rei.andou.githubbrowser.di.handlers.AuthorizationComponentHandler;
 import jp.rei.andou.githubbrowser.di.handlers.DestroyableComponent;
-import jp.rei.andou.githubbrowser.presentation.MainActivity;
-import jp.rei.andou.githubbrowser.presentation.authorization.WelcomeFragment;
 import jp.rei.andou.githubbrowser.presentation.authorization.SignInFragment;
+import jp.rei.andou.githubbrowser.presentation.authorization.WelcomeFragment;
+import jp.rei.andou.githubbrowser.presentation.main.MainActivity;
 
 public class MainComponentHandler {
 

@@ -12,7 +12,7 @@ import jp.rei.andou.githubbrowser.presentation.authorization.SignInViewModelImpl
 import jp.rei.andou.githubbrowser.presentation.general.ViewModelFactory;
 
 @Module
-public abstract class SignInViewModelFactoryModule {
+public abstract class ViewModelFactoryModule {
 
     @Binds
     @SignInScope

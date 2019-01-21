@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -39,8 +40,21 @@ public class SignInFragment extends AutoConfigFragment {
                 inflater, R.layout.sign_in, container, false
         );
         binding.setHandler(authorizationNavigator);
+        binding.setViewModel((SignInViewModelImpl) viewModel);
         binding.setLifecycleOwner(this);
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel.getErrorToastMessages()
+                .observe(this,
+                        message -> Toast.makeText(
+                                getContext(),
+                                message.getContent(),
+                                Toast.LENGTH_LONG
+                        ).show()
+                );
+    }
 }

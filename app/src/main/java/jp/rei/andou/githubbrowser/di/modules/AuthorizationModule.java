@@ -4,8 +4,8 @@ import android.support.v4.app.FragmentManager;
 
 import dagger.Module;
 import dagger.Provides;
-import jp.rei.andou.githubbrowser.data.repositories.AuthorizationRepository;
-import jp.rei.andou.githubbrowser.data.repositories.AuthorizationRepositoryNetwork;
+import jp.rei.andou.githubbrowser.data.repositories.GithubRepository;
+import jp.rei.andou.githubbrowser.data.repositories.SessionRepository;
 import jp.rei.andou.githubbrowser.di.scopes.AuthorizationScope;
 import jp.rei.andou.githubbrowser.domain.interactors.AuthorizationInteractor;
 import jp.rei.andou.githubbrowser.domain.interactors.AuthorizationInteractorImpl;
@@ -17,14 +17,9 @@ public class AuthorizationModule {
 
     @Provides
     @AuthorizationScope
-    public static AuthorizationRepository provideRepository() {
-        return new AuthorizationRepositoryNetwork();
-    }
-
-    @Provides
-    @AuthorizationScope
-    public static AuthorizationInteractor provideInteractor(AuthorizationRepository repository) {
-        return new AuthorizationInteractorImpl(repository);
+    public static AuthorizationInteractor provideInteractor(GithubRepository githubRepository,
+                                                            SessionRepository sessionRepository) {
+        return new AuthorizationInteractorImpl(githubRepository, sessionRepository);
     }
 
     @Provides

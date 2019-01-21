@@ -6,4 +6,7 @@
     <string name="login">Login</string>
     <string name="password">password</string>
     <string name="username">username</string>
+    <string name="credentials_is_invalid">Credentials is invalid!</string>
+    <string name="server_error">An server error has occurred</string>
+    <string name="internal_error">An internal error has occurred</string>
 </resources>
