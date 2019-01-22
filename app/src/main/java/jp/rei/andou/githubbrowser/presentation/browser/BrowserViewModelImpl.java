@@ -1,6 +1,7 @@
 package jp.rei.andou.githubbrowser.presentation.browser;
 
 import android.arch.lifecycle.ViewModel;
+import android.util.Log;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 
@@ -16,7 +17,7 @@ public class BrowserViewModelImpl extends ViewModel implements BrowserViewModel 
 
     private final BrowserInteractor browserInteractor;
     private final PublishRelay<String> searchQuerySubject = PublishRelay.create();
-    private CompositeDisposable compositeDisposable;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
     public BrowserViewModelImpl(BrowserInteractor browserInteractor) {
@@ -28,7 +29,7 @@ public class BrowserViewModelImpl extends ViewModel implements BrowserViewModel 
         Disposable disposable = searchQuerySubject.map(String::trim)
                 .debounce(250, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
-                .subscribe();
+                .subscribe(query -> Log.d("QUERY", query));
         compositeDisposable.add(disposable);
     }
 

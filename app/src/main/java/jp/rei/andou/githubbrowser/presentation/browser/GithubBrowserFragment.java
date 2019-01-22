@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,11 +30,13 @@ public class GithubBrowserFragment extends ConfigurableFragment {
     @Inject
     BrowserViewModel browserViewModel;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private PublishRelay<String> searchQuerySubject;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //todo 2: design layouts and set navigators to databindings layouts
+        setHasOptionsMenu(true);
+        this.searchQuerySubject = browserViewModel.getSearchQuerySubject();
     }
 
     @Nullable
@@ -45,7 +48,7 @@ public class GithubBrowserFragment extends ConfigurableFragment {
         );
         binding.setLifecycleOwner(this);
         if (getActivity() != null) {
-            getActivity().setActionBar(binding.toolbar);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbar);
         }
         return binding.getRoot();
     }
@@ -63,22 +66,25 @@ public class GithubBrowserFragment extends ConfigurableFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.browser_menu, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        PublishRelay<String> searchQuerySubject = browserViewModel.getSearchQuerySubject();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String newText) {
-                searchQuerySubject.accept(newText);
+                if (searchQuerySubject != null) {
+                    searchQuerySubject.accept(newText);
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                searchQuerySubject.accept(query);
+                if (searchQuerySubject != null) {
+                    searchQuerySubject.accept(query);
+                }
                 return false;
             }
         });
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }
