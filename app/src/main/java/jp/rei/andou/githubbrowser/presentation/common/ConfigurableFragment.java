@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 
 import jp.rei.andou.githubbrowser.App;
 
-public abstract class AutoConfigFragment extends Fragment {
+public abstract class ConfigurableFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -9,9 +9,11 @@ import jp.rei.andou.githubbrowser.di.components.AppComponent;
 import jp.rei.andou.githubbrowser.di.components.DaggerMainComponent;
 import jp.rei.andou.githubbrowser.di.components.MainComponent;
 import jp.rei.andou.githubbrowser.di.handlers.AuthorizationComponentHandler;
+import jp.rei.andou.githubbrowser.di.handlers.BrowserComponentHandler;
 import jp.rei.andou.githubbrowser.di.handlers.DestroyableComponent;
 import jp.rei.andou.githubbrowser.presentation.authorization.SignInFragment;
 import jp.rei.andou.githubbrowser.presentation.authorization.WelcomeFragment;
+import jp.rei.andou.githubbrowser.presentation.browser.GithubBrowserFragment;
 import jp.rei.andou.githubbrowser.presentation.main.MainActivity;
 
 public class MainComponentHandler {
@@ -34,9 +36,7 @@ public class MainComponentHandler {
     }
 
     public AuthorizationComponentHandler getOrCreateAuthComponentHandler() {
-        if (mainComponent == null) {
-            throw new IllegalStateException("MainComponent is null. Unable to create dependency component");
-        }
+        checkMainComponent();
         AuthorizationComponentHandler handler = (AuthorizationComponentHandler) componentMap.get(
                 AuthorizationComponentHandler.class
         );
@@ -47,12 +47,38 @@ public class MainComponentHandler {
         return handler;
     }
 
+    public BrowserComponentHandler getOrCreateBrowserComponentHandler() {
+       checkMainComponent();
+       BrowserComponentHandler handler = (BrowserComponentHandler) componentMap.get(
+               BrowserComponentHandler.class
+       );
+       if (handler == null) {
+           handler = new BrowserComponentHandler(mainComponent);
+           componentMap.put(BrowserComponentHandler.class, handler);
+       }
+       return handler;
+    }
+
+    private void checkMainComponent() {
+        if (mainComponent == null) {
+            throw new IllegalStateException("MainComponent is null. Unable to create dependency component");
+        }
+    }
+
     public void inject(SignInFragment fragment) {
         getOrCreateAuthComponentHandler().inject(fragment);
     }
 
     public void inject(WelcomeFragment fragment) {
         getOrCreateAuthComponentHandler().inject(fragment);
+    }
+
+    public void inject(GithubBrowserFragment fragment) {
+        getOrCreateBrowserComponentHandler().inject(fragment);
+    }
+
+    public void destroy(GithubBrowserFragment fragment) {
+        getOrCreateBrowserComponentHandler().destroy();
     }
 
     public void destroy(SignInFragment fragment) {

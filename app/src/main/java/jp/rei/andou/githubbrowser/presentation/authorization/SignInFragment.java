@@ -14,9 +14,9 @@ import javax.inject.Inject;
 import jp.rei.andou.githubbrowser.App;
 import jp.rei.andou.githubbrowser.R;
 import jp.rei.andou.githubbrowser.databinding.SignInBinding;
-import jp.rei.andou.githubbrowser.presentation.common.AutoConfigFragment;
+import jp.rei.andou.githubbrowser.presentation.common.ConfigurableFragment;
 
-public class SignInFragment extends AutoConfigFragment {
+public class SignInFragment extends ConfigurableFragment {
 
     @Inject
     AuthorizationNavigator authorizationNavigator;

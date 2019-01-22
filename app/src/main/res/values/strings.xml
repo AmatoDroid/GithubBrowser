@@ -9,4 +9,6 @@
     <string name="credentials_is_invalid">Credentials is invalid!</string>
     <string name="server_error">An server error has occurred</string>
     <string name="internal_error">An internal error has occurred</string>
+    <string name="no_elements">Empty</string>
+    <string name="search">Search</string>
 </resources>
