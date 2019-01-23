@@ -18,7 +18,7 @@ public class BindingAdapters {
 
     @BindingAdapter({"imageUrl", "error"})
     public static void loadImage(ImageView view, String url, Drawable error) {
-        Picasso.get().load(url).error(error).centerCrop().into(view);
+        Picasso.get().load(url).error(error).resize(50, 50).centerCrop().into(view);
     }
 
     @BindingAdapter("android:visibility")
