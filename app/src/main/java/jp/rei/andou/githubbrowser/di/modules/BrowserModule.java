@@ -4,6 +4,9 @@ import android.arch.lifecycle.ViewModelProviders;
 
 import dagger.Module;
 import dagger.Provides;
+import jp.rei.andou.githubbrowser.data.DataSources.RepositoryDataFactory;
+import jp.rei.andou.githubbrowser.data.repositories.GithubRepository;
+import jp.rei.andou.githubbrowser.data.repositories.SessionRepository;
 import jp.rei.andou.githubbrowser.di.modules.factories.BrowserViewModelFactoryModule;
 import jp.rei.andou.githubbrowser.di.scopes.BrowserScope;
 import jp.rei.andou.githubbrowser.domain.interactors.BrowserInteractor;
@@ -18,8 +21,15 @@ public abstract class BrowserModule {
 
     @Provides
     @BrowserScope
-    public static BrowserInteractor provideBrowserInteractor() {
-        return new BrowserInteractorImpl();
+    public static RepositoryDataFactory provideRepositoryDataFactory(GithubRepository githubRepository,
+                                                                     SessionRepository sessionRepository) {
+        return new RepositoryDataFactory(githubRepository, sessionRepository);
+    }
+
+    @Provides
+    @BrowserScope
+    public static BrowserInteractor provideBrowserInteractor(BrowserInteractorImpl interactor) {
+        return interactor;
     }
 
     @Provides

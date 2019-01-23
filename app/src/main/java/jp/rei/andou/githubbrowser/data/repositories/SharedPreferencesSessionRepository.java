@@ -26,4 +26,9 @@ public class SharedPreferencesSessionRepository implements SessionRepository {
     public boolean isUserSessionAlive() {
         return sharedPreferences.contains(USER_CREDENTIAL_TAG);
     }
+
+    @Override
+    public String getUserCredentials() {
+        return sharedPreferences.getString(USER_CREDENTIAL_TAG, null);
+    }
 }

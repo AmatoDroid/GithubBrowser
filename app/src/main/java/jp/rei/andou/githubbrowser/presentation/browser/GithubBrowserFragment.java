@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +21,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import jp.rei.andou.githubbrowser.App;
 import jp.rei.andou.githubbrowser.R;
 import jp.rei.andou.githubbrowser.databinding.BrowserBinding;
+import jp.rei.andou.githubbrowser.presentation.adapters.RepositoriesAdapter;
 import jp.rei.andou.githubbrowser.presentation.common.ConfigurableFragment;
 import jp.rei.andou.githubbrowser.presentation.general.GeneralNavigator;
 
@@ -50,6 +52,10 @@ public class GithubBrowserFragment extends ConfigurableFragment {
         if (getActivity() != null) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbar);
         }
+        binding.repositories.setLayoutManager(new LinearLayoutManager(getContext()));
+        RepositoriesAdapter adapter = new RepositoriesAdapter();
+        browserViewModel.getPagedListLiveData().observe(this, adapter::submitList);
+        binding.repositories.setAdapter(adapter);
         return binding.getRoot();
     }
 
