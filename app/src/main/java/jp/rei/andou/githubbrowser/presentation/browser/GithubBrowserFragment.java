@@ -23,12 +23,9 @@ import jp.rei.andou.githubbrowser.R;
 import jp.rei.andou.githubbrowser.databinding.BrowserBinding;
 import jp.rei.andou.githubbrowser.presentation.adapters.RepositoriesAdapter;
 import jp.rei.andou.githubbrowser.presentation.common.ConfigurableFragment;
-import jp.rei.andou.githubbrowser.presentation.general.GeneralNavigator;
 
 public class GithubBrowserFragment extends ConfigurableFragment {
 
-    @Inject
-    GeneralNavigator generalNavigator;
     @Inject
     BrowserViewModel browserViewModel;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();

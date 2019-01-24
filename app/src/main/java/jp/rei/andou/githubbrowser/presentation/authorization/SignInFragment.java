@@ -15,6 +15,8 @@ import jp.rei.andou.githubbrowser.App;
 import jp.rei.andou.githubbrowser.R;
 import jp.rei.andou.githubbrowser.databinding.SignInBinding;
 import jp.rei.andou.githubbrowser.presentation.common.ConfigurableFragment;
+import jp.rei.andou.githubbrowser.presentation.general.Navigation;
+import jp.rei.andou.githubbrowser.presentation.main.MainActivity;
 
 public class SignInFragment extends ConfigurableFragment {
 
@@ -44,6 +46,22 @@ public class SignInFragment extends ConfigurableFragment {
                             showToast(message.getContent());
                         }
                 );
+        viewModel.getNavigationEvents().observe(this, navigationSingleEvent -> {
+            Navigation navigation = navigationSingleEvent.getContent();
+            if (navigation == null) {
+                return;
+            }
+            switch (navigation) {
+                case WELCOME: {
+                    break;
+                }
+
+                case BROWSER: {
+                    ((MainActivity) getActivity()).routeToBrowserScreen();
+                    break;
+                }
+            }
+        });
     }
 
     @Nullable

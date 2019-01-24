@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable;
 import jp.rei.andou.githubbrowser.R;
 import jp.rei.andou.githubbrowser.domain.interactors.AuthorizationInteractor;
 import jp.rei.andou.githubbrowser.presentation.authorization.model.AuthorizationUser;
-import jp.rei.andou.githubbrowser.presentation.general.GeneralNavigator;
+import jp.rei.andou.githubbrowser.presentation.general.Navigation;
 import jp.rei.andou.githubbrowser.presentation.general.SingleEvent;
 import lombok.Getter;
 import retrofit2.HttpException;
@@ -24,7 +24,6 @@ public class SignInViewModelImpl extends ViewModel implements SignInViewModel {
     private final AuthorizationInteractor interactor;
     @Getter
     private final AuthorizationUser user = new AuthorizationUser();
-    private final GeneralNavigator navigator;
     @Getter
     private MutableLiveData<String> usernameFieldError = new MutableLiveData<>();
     @Getter
@@ -32,11 +31,11 @@ public class SignInViewModelImpl extends ViewModel implements SignInViewModel {
     @Getter
     private MutableLiveData<SingleEvent<Integer>> toastErrorMessage = new MutableLiveData<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private MutableLiveData<SingleEvent<Navigation>> navigation = new MutableLiveData<>();
 
     @Inject
-    public SignInViewModelImpl(AuthorizationInteractor interactor, GeneralNavigator navigator) {
+    public SignInViewModelImpl(AuthorizationInteractor interactor) {
         this.interactor = interactor;
-        this.navigator = navigator;
         //for initial button disabling
         usernameFieldError.postValue("");
         passwordFieldError.postValue("");
@@ -48,7 +47,7 @@ public class SignInViewModelImpl extends ViewModel implements SignInViewModel {
             return;
         }
         Disposable disposable = interactor.login(user.getUsername(), user.getPassword())
-                .subscribe(user -> navigator.routeToBrowserScreen(),
+                .subscribe(user -> navigation.postValue(new SingleEvent<>(Navigation.BROWSER)),
                         throwable -> {
                             int errorStringRes;
                             if (throwable instanceof HttpException) {
@@ -70,6 +69,11 @@ public class SignInViewModelImpl extends ViewModel implements SignInViewModel {
     @Override
     public LiveData<SingleEvent<Integer>> getErrorToastMessages() {
         return toastErrorMessage;
+    }
+
+    @Override
+    public LiveData<SingleEvent<Navigation>> getNavigationEvents() {
+        return navigation;
     }
 
     public void checkUsername(CharSequence username) {

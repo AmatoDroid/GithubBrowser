@@ -8,18 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import javax.inject.Inject;
-
 import jp.rei.andou.githubbrowser.App;
 import jp.rei.andou.githubbrowser.R;
 import jp.rei.andou.githubbrowser.databinding.AuthorizationBinding;
 import jp.rei.andou.githubbrowser.presentation.common.ConfigurableFragment;
 import jp.rei.andou.githubbrowser.presentation.general.GeneralNavigator;
+import jp.rei.andou.githubbrowser.presentation.main.MainActivity;
 
 public class WelcomeFragment extends ConfigurableFragment {
-
-    @Inject
-    GeneralNavigator authorizationNavigator;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +30,23 @@ public class WelcomeFragment extends ConfigurableFragment {
         AuthorizationBinding binding = DataBindingUtil.inflate(
                 inflater, R.layout.authorization, container, false
         );
-        binding.setHandler(authorizationNavigator);
+        binding.setHandler(new GeneralNavigator() {
+            @Override
+            public void routeToAuthorizationScreen() { }
+
+            @Override
+            public void routeToBrowserScreen() {
+                ((MainActivity) getActivity()).routeToBrowserScreen();
+            }
+
+            @Override
+            public void routeToSignInScreen() {
+                ((MainActivity) getActivity()).routeToSignInScreen();
+            }
+
+            @Override
+            public boolean routeToRetainedFragment() { return false; }
+        });
         return binding.getRoot();
     }
 

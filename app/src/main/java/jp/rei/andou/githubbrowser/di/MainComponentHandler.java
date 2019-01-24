@@ -31,7 +31,6 @@ public class MainComponentHandler {
         if (mainComponent == null) {
             mainComponent = DaggerMainComponent.builder()
                     .withAppComponent(appComponent)
-                    .bindMainActivity(activity)
                     .build();
         }
         mainComponent.inject(activity);
