@@ -37,6 +37,7 @@ public class GithubBrowserFragment extends ConfigurableFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(true);
         this.searchQuerySubject = browserViewModel.getSearchQuerySubject();
     }

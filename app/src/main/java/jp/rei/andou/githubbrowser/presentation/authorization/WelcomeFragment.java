@@ -14,11 +14,18 @@ import jp.rei.andou.githubbrowser.App;
 import jp.rei.andou.githubbrowser.R;
 import jp.rei.andou.githubbrowser.databinding.AuthorizationBinding;
 import jp.rei.andou.githubbrowser.presentation.common.ConfigurableFragment;
+import jp.rei.andou.githubbrowser.presentation.general.GeneralNavigator;
 
 public class WelcomeFragment extends ConfigurableFragment {
 
     @Inject
-    AuthorizationNavigator authorizationNavigator;
+    GeneralNavigator authorizationNavigator;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Nullable
     @Override

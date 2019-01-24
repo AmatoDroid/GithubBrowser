@@ -10,28 +10,27 @@ import jp.rei.andou.githubbrowser.presentation.browser.GithubBrowserFragment;
 public class AuthorizationRouter implements AuthorizationNavigator {
 
     private final FragmentManager fragmentManager;
+    private final static String BROWSER_FRAGMENT_TAG = "BROWSER_FRAGMENT_TAG";
 
     @Inject
     public AuthorizationRouter(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
     }
 
+
     @Override
     public void routeToSignIn() {
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, new SignInFragment())
-                .commitAllowingStateLoss();
+
     }
 
     @Override
-    public void routeToBrowserAsGuest() {
+    public void routeToBrowser() {
+        GithubBrowserFragment retainFragment = (GithubBrowserFragment) fragmentManager.findFragmentByTag(
+                BROWSER_FRAGMENT_TAG
+        );
+        retainFragment = retainFragment == null ? new GithubBrowserFragment() : retainFragment;
         fragmentManager.beginTransaction()
-                .replace(R.id.container, new GithubBrowserFragment())
+                .replace(R.id.container, retainFragment, BROWSER_FRAGMENT_TAG)
                 .commitAllowingStateLoss();
-    }
-
-    @Override
-    public void routeToBrowser(/*some user data to put to intent*/) {
-
     }
 }

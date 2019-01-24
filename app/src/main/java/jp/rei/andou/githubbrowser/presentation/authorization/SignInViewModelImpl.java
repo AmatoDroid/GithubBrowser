@@ -14,6 +14,7 @@ import io.reactivex.disposables.Disposable;
 import jp.rei.andou.githubbrowser.R;
 import jp.rei.andou.githubbrowser.domain.interactors.AuthorizationInteractor;
 import jp.rei.andou.githubbrowser.presentation.authorization.model.AuthorizationUser;
+import jp.rei.andou.githubbrowser.presentation.general.GeneralNavigator;
 import jp.rei.andou.githubbrowser.presentation.general.SingleEvent;
 import lombok.Getter;
 import retrofit2.HttpException;
@@ -23,6 +24,7 @@ public class SignInViewModelImpl extends ViewModel implements SignInViewModel {
     private final AuthorizationInteractor interactor;
     @Getter
     private final AuthorizationUser user = new AuthorizationUser();
+    private final GeneralNavigator navigator;
     @Getter
     private MutableLiveData<String> usernameFieldError = new MutableLiveData<>();
     @Getter
@@ -32,8 +34,9 @@ public class SignInViewModelImpl extends ViewModel implements SignInViewModel {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Inject
-    public SignInViewModelImpl(AuthorizationInteractor interactor) {
+    public SignInViewModelImpl(AuthorizationInteractor interactor, GeneralNavigator navigator) {
         this.interactor = interactor;
+        this.navigator = navigator;
         //for initial button disabling
         usernameFieldError.postValue("");
         passwordFieldError.postValue("");
@@ -45,7 +48,7 @@ public class SignInViewModelImpl extends ViewModel implements SignInViewModel {
             return;
         }
         Disposable disposable = interactor.login(user.getUsername(), user.getPassword())
-                .subscribe(user -> {},
+                .subscribe(user -> navigator.routeToBrowserScreen(),
                         throwable -> {
                             int errorStringRes;
                             if (throwable instanceof HttpException) {

@@ -2,6 +2,7 @@ package jp.rei.andou.githubbrowser.presentation.general;
 
 import lombok.Getter;
 
+//todo not thread-safe
 public class SingleEvent<T> {
 
     private final T content;

@@ -61,7 +61,9 @@ dependencies {
     /*RxRelay*/
     implementation 'com.jakewharton.rxrelay2:rxrelay:2.1.0'
     /*Picasso*/
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation ('com.squareup.picasso:picasso:2.71828') {
+        exclude group: 'com.android.support'
+    }
 
 
     testImplementation 'junit:junit:4.12'

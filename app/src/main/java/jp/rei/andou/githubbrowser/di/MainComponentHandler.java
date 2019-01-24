@@ -28,10 +28,12 @@ public class MainComponentHandler {
     }
 
     public void inject(MainActivity activity) {
-        mainComponent = DaggerMainComponent.builder()
-                .withAppComponent(appComponent)
-                .bindMainActivity(activity)
-                .build();
+        if (mainComponent == null) {
+            mainComponent = DaggerMainComponent.builder()
+                    .withAppComponent(appComponent)
+                    .bindMainActivity(activity)
+                    .build();
+        }
         mainComponent.inject(activity);
     }
 

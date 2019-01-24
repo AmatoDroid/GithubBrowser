@@ -4,4 +4,7 @@ public interface GeneralNavigator {
 
     void routeToAuthorizationScreen();
     void routeToBrowserScreen();
+    void routeToSignInScreen();
+
+    boolean routeToRetainedFragment();
 }

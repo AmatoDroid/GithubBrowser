@@ -19,8 +19,6 @@ import jp.rei.andou.githubbrowser.presentation.common.ConfigurableFragment;
 public class SignInFragment extends ConfigurableFragment {
 
     @Inject
-    AuthorizationNavigator authorizationNavigator;
-    @Inject
     SignInViewModel viewModel;
 
     @Override
@@ -33,28 +31,41 @@ public class SignInFragment extends ConfigurableFragment {
         application.destroy(this);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        viewModel.getErrorToastMessages()
+                .observe(this,
+                        message -> {
+                            if (message == null) {
+                                return;
+                            }
+                            showToast(message.getContent());
+                        }
+                );
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         SignInBinding binding = DataBindingUtil.inflate(
                 inflater, R.layout.sign_in, container, false
         );
-        binding.setHandler(authorizationNavigator);
         binding.setViewModel((SignInViewModelImpl) viewModel);
         binding.setLifecycleOwner(this);
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        viewModel.getErrorToastMessages()
-                .observe(this,
-                        message -> Toast.makeText(
-                                getContext(),
-                                message.getContent(),
-                                Toast.LENGTH_LONG
-                        ).show()
-                );
+    private void showToast(Integer message) {
+        if (message == null) {
+            return;
+        }
+        Toast.makeText(
+                getContext(),
+                message,
+                Toast.LENGTH_LONG
+        ).show();
     }
+
 }
