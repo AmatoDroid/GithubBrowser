@@ -30,7 +30,7 @@ public class SignInFragment extends ConfigurableFragment {
 
     @Override
     protected void onComponentDestroying(App application) {
-        application.destroy(this);
+        application.destroySignInComponent();
     }
 
     @Override
@@ -52,9 +52,6 @@ public class SignInFragment extends ConfigurableFragment {
                 return;
             }
             switch (navigation) {
-                case WELCOME: {
-                    break;
-                }
 
                 case BROWSER: {
                     ((MainActivity) getActivity()).routeToBrowserScreen();

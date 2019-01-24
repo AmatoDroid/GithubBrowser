@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (isFinishing()) {
-            ((App) getApplication()).destroy(this);
+            ((App) getApplication()).destroyMainComponent();
         }
     }
 

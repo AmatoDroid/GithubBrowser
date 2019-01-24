@@ -78,20 +78,20 @@ public class MainComponentHandler {
         getOrCreateBrowserComponentHandler().inject(fragment);
     }
 
-    public void destroy(GithubBrowserFragment fragment) {
+    public void destroyBrowserComponent() {
         getOrCreateBrowserComponentHandler().destroy();
     }
 
-    public void destroy(SignInFragment fragment) {
-        getOrCreateAuthComponentHandler().destroy(fragment);
+    public void destroySignInComponent() {
+        getOrCreateAuthComponentHandler().destroySignInComponent();
     }
 
-    public void destroy(WelcomeFragment fragment) {
-        getOrCreateAuthComponentHandler().destroy(fragment);
+    public void destroyWelcomeComponent() {
+        getOrCreateAuthComponentHandler().destroyWelcomeComponent();
     }
 
 
-    public void destroy(MainActivity activity) {
+    public void destroyMainComponent() {
         for (DestroyableComponent component : componentMap.values()) {
             component.destroy();
         }

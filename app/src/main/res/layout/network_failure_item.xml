@@ -8,6 +8,9 @@
         <variable
             name="networkState"
             type="jp.rei.andou.githubbrowser.data.entities.NetworkState"/>
+        <variable
+            name="retryHandler"
+            type="jp.rei.andou.githubbrowser.presentation.browser.RetryCallback"/>
     </data>
 
     <LinearLayout
@@ -34,6 +37,13 @@
             android:layout_gravity="center"
             android:visibility="@{Objects.equals(networkState, NetworkState.RUNNING)}"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="@{() -> retryHandler.retry()}"
+            android:visibility="@{Objects.equals(networkState, NetworkState.FAILED)}"
+            android:text="@string/retry"/>
     </LinearLayout>
 
 </layout>

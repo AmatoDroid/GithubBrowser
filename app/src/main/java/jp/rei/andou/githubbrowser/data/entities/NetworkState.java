@@ -7,7 +7,8 @@ public enum NetworkState {
 
     RUNNING,
     SUCCESS,
-    FAILED;
+    FAILED,
+    INITIAL_LOADING;
 
     @Setter
     @Getter

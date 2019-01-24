@@ -1,10 +1,12 @@
 package jp.rei.andou.githubbrowser.di.modules;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
 
 import dagger.Module;
 import dagger.Provides;
 import jp.rei.andou.githubbrowser.data.DataSources.RepositoryDataFactory;
+import jp.rei.andou.githubbrowser.data.entities.NetworkState;
 import jp.rei.andou.githubbrowser.data.repositories.GithubRepository;
 import jp.rei.andou.githubbrowser.data.repositories.SessionRepository;
 import jp.rei.andou.githubbrowser.di.modules.factories.BrowserViewModelFactoryModule;
@@ -21,9 +23,18 @@ public abstract class BrowserModule {
 
     @Provides
     @BrowserScope
-    public static RepositoryDataFactory provideRepositoryDataFactory(GithubRepository githubRepository,
-                                                                     SessionRepository sessionRepository) {
-        return new RepositoryDataFactory(githubRepository, sessionRepository);
+    public static MutableLiveData<NetworkState> provideNetworkStateLiveData() {
+        return new MutableLiveData<>();
+    }
+
+    @Provides
+    @BrowserScope
+    public static RepositoryDataFactory provideRepositoryDataFactory(
+            GithubRepository githubRepository,
+            SessionRepository sessionRepository,
+            MutableLiveData<NetworkState> networkStateMutableLiveData
+    ) {
+        return new RepositoryDataFactory(githubRepository, sessionRepository, networkStateMutableLiveData);
     }
 
     @Provides

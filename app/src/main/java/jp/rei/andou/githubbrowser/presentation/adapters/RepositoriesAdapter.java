@@ -10,6 +10,7 @@ import jp.rei.andou.githubbrowser.data.entities.NetworkState;
 import jp.rei.andou.githubbrowser.data.entities.Repo;
 import jp.rei.andou.githubbrowser.databinding.NetworkFailureItemBinding;
 import jp.rei.andou.githubbrowser.databinding.RepositoryItemBinding;
+import jp.rei.andou.githubbrowser.presentation.browser.RetryCallback;
 
 
 //todo refactor to mv* approach
@@ -18,6 +19,7 @@ public class RepositoriesAdapter extends PagedListAdapter<Repo, RecyclerView.Vie
     private static final int TYPE_PROGRESS = 0;
     private static final int TYPE_ITEM = 1;
     private NetworkState networkState;
+    private RetryCallback retryCallback;
 
 
     public RepositoriesAdapter() {
@@ -77,6 +79,15 @@ public class RepositoriesAdapter extends PagedListAdapter<Repo, RecyclerView.Vie
         }
     }
 
+    public void registerRetryCallback(RetryCallback callback) {
+        this.retryCallback = callback;
+    }
+
+    public void unregisterRetryCallback() {
+        this.retryCallback = null;
+    }
+
+
     public class RepoItemViewHolder extends RecyclerView.ViewHolder {
 
         private RepositoryItemBinding binding;
@@ -97,6 +108,7 @@ public class RepositoriesAdapter extends PagedListAdapter<Repo, RecyclerView.Vie
         public NetworkStateItemViewHolder(NetworkFailureItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            this.binding.setRetryHandler(retryCallback);
         }
 
         public void bindTo(NetworkState networkState) {

@@ -5,8 +5,8 @@ import jp.rei.andou.githubbrowser.di.components.DaggerAuthorizationComponent;
 import jp.rei.andou.githubbrowser.di.components.MainComponent;
 import jp.rei.andou.githubbrowser.di.components.SignInComponent;
 import jp.rei.andou.githubbrowser.di.components.WelcomeComponent;
-import jp.rei.andou.githubbrowser.presentation.authorization.WelcomeFragment;
 import jp.rei.andou.githubbrowser.presentation.authorization.SignInFragment;
+import jp.rei.andou.githubbrowser.presentation.authorization.WelcomeFragment;
 
 public class AuthorizationComponentHandler implements DestroyableComponent {
 
@@ -44,11 +44,11 @@ public class AuthorizationComponentHandler implements DestroyableComponent {
         welcomeComponent.inject(fragment);
     }
 
-    public void destroy(SignInFragment fragment) {
+    public void destroySignInComponent() {
         signInComponent = null;
     }
 
-    public void destroy(WelcomeFragment fragment) {
+    public void destroyWelcomeComponent() {
         welcomeComponent = null;
     }
 

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 
 import jp.rei.andou.githubbrowser.App;
 
+//todo replace with dagger.android implementation
 public abstract class ConfigurableFragment extends Fragment {
 
     @Override

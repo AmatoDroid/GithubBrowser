@@ -11,17 +11,20 @@ import javax.inject.Inject;
 
 import jp.rei.andou.githubbrowser.data.DataSources.RepositoryDataFactory;
 import jp.rei.andou.githubbrowser.data.entities.Repo;
+import jp.rei.andou.githubbrowser.data.repositories.SessionRepository;
 
 public class BrowserInteractorImpl implements BrowserInteractor {
 
     private static final int PAGE_SIZE = 20;
 
     private final RepositoryDataFactory dataFactory;
+    private final SessionRepository sessionRepository;
     private LiveData<PagedList<Repo>> repositoryLiveData;
 
     @Inject
-    public BrowserInteractorImpl(RepositoryDataFactory dataFactory) {
+    public BrowserInteractorImpl(RepositoryDataFactory dataFactory, SessionRepository repository) {
         this.dataFactory = dataFactory;
+        this.sessionRepository = repository;
     }
 
     @Override
@@ -38,17 +41,31 @@ public class BrowserInteractorImpl implements BrowserInteractor {
 
     @Override
     public void newSearch(String query) {
-        PagedList pagedList = repositoryLiveData.getValue();
-        if (pagedList == null) {
-            return;
-        }
         dataFactory.setQuery(query);
-        pagedList.getDataSource().invalidate();
+        retrySearch();
+    }
+
+    @Override
+    public void retrySearch() {
+        PagedList pagedList = repositoryLiveData.getValue();
+        if (pagedList != null) {
+            pagedList.getDataSource().invalidate();
+        }
     }
 
     @Override
     public LiveData<PagedList<Repo>> getRepositoriesPagedList() {
         return repositoryLiveData;
+    }
+
+    @Override
+    public boolean isUserSessionIsAlive() {
+        return sessionRepository.isUserSessionAlive();
+    }
+
+    @Override
+    public void logout() {
+        sessionRepository.logout();
     }
 
 

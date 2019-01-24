@@ -31,4 +31,9 @@ public class SharedPreferencesSessionRepository implements SessionRepository {
     public String getUserCredentials() {
         return sharedPreferences.getString(USER_CREDENTIAL_TAG, null);
     }
+
+    @Override
+    public void logout() {
+        sharedPreferences.edit().remove(USER_CREDENTIAL_TAG).apply();
+    }
 }

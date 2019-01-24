@@ -57,6 +57,6 @@ public class WelcomeFragment extends ConfigurableFragment {
 
     @Override
     protected void onComponentDestroying(App application) {
-        application.destroy(this);
+        application.destroyWelcomeComponent();
     }
 }

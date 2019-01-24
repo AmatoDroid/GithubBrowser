@@ -10,4 +10,6 @@ public interface SessionRepository {
 
     @Nullable
     String getUserCredentials();
+
+    void logout();
 }

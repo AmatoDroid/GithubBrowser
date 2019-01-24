@@ -23,10 +23,10 @@
 
             <ImageView
                 android:id="@+id/avatar"
+                android:src="@drawable/ic_face_black_24dp"
                 app:imageUrl="@{repository.repositoryOwner.avatarUrl}"
                 app:error="@{@drawable/ic_face_black_24dp}"
                 android:layout_marginEnd="8dp"
-                tools:background="#000"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
 

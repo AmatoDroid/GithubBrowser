@@ -8,5 +8,8 @@ import jp.rei.andou.githubbrowser.data.entities.Repo;
 public interface BrowserInteractor {
     void createRepositoryDataSource();
     void newSearch(String query);
+    void retrySearch();
     LiveData<PagedList<Repo>> getRepositoriesPagedList();
+    boolean isUserSessionIsAlive();
+    void logout();
 }

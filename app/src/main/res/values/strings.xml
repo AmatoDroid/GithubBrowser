@@ -11,4 +11,7 @@
     <string name="internal_error">An internal error has occurred</string>
     <string name="no_elements">Empty</string>
     <string name="search">Search</string>
+    <string name="retry">retry</string>
+    <string name="login_logout">LoginLogout</string>
+    <string name="logout">Logout</string>
 </resources>
